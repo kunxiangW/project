@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/my.css">
+    <title>table 渲染</title>
+    <style>
+        .table-rwd {
+            margin-top: 15px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .table-rwd thead {
+                display: none;
+            }
+
+            .table-rwd tbody tr {
+                display: block;
+                border: 2px solid var(--mycolor02);
+                margin-top: 10px;
+            }
+
+            .table-rwd tbody tr td {
+                display: block;
+                overflow: hidden;
+            }
+
+            .table-rwd tbody tr td:before {
+                content: attr(data-th)" : ";
+                font-weight: 700;
+                color: var(--mycolor13);
+                display: block;
+                float: left;
+                width: 6em;
+                text-align: right;
+                padding-right: 1em;
+            }
+
+            .table-rwd tbody tr td span.table-col {
+                display: block;
+                float: left;
+                width: calc(100% - 6em);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section id="s20" class="bg-dark">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <i class="fa-solid fa-cannabis text-success fa-2x"></i>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="0913-SPA.html">首頁</a>
+                            </li>
+                        </ul>
+                        <form class="d-flex ms-auto" role="search">
+                            <a href="#" class="btn btn-success me-0" id="s20_logout_btn">登出</a>
+                            <span>
+                                <h2 class="text-light d-none" id="login_message">歡迎回來</h2>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </section>
+    <div class="container">
+
+        <div class="row">
+            <table class="table table-rwd table-bordered">
+                <thead class="text-bg-dark">
+                    <tr>
+                        <th width="5%">ID</th>
+                        <th width="10%">啟用</th>
+                        <th width="10%">帳號</th>
+                        <th width="20%">Email</th>
+                        <th width="10%">Nickname</th>
+                        <th width="15%">Created_at</th>
+                        <th width="15%">#</th>
+                    </tr>
+                </thead>
+                <tbody id="mem_table">
+                    <tr class="table-primary">
+                        <td data-th="ID"><span class="table-col">ID</span></td>
+                        <td data-th="帳號"><span class="table-col">帳號</span></td>
+                        <td data-th="Email"><span class="table-col">Email</span></td>
+                        <td data-th="Nickname"><span class="table-col">Nickname</span></td>
+                        <td data-th="Created_at"><span class="table-col">Created_at</span></td>
+                        <td><a href="#" class="btn btn-warning">更新</a>
+                            <a href="#" class="btn btn-danger me-2">刪除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- updateModal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-bg-warning">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">會員更新</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">帳號</label>
+                        <input type="text" class="form-control" id="username" name="username" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nickname" class="form-label">暱稱</label>
+                        <input type="text" class="form-control" id="nickname" name="nickname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button id="modal_update_btn" class="btn btn-primary">確認更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <tr class="table-primary">藏值
+        <td data-th="ID"><span class="table-col">' + item.ID + '</span></td >
+        <td data-th="ID"><span class="table-col">' + switch01 + '</span></td >
+        <td data-th="帳號"><span class="table-col">' + item.Username + '</span></td>
+        <td data-th="Email"><span class="table-col">' + item.Email + '</span></td>
+        <td data-th="Nickname"><span class="table-col">' + item.Nickname + '</span></td>
+        <td data-th="Created_at"><span class="table-col">' + item.Created_at + '</span></td>
+        <td><a href="#" class="btn btn-warning me-3" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' + item.ID + '" data-username="' + item.Username + '" data-nickname="' + item.Nickname + '" data-email="' + item.Email +'" id="update_btn">更新</a>
+        <a href="#" class="btn btn-danger" data-id="' + item.ID + '" data-username="' + item.Username + '" id="delete_btn">刪除</a></td>
+    </tr> -->
+
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        var u_id;
+        $(function () {
+            if (getCookie('Uid01') != "") {
+                //是否有登入
+                $.ajax({
+                    type: "POST",
+                    url: "api/check_uid_api.php",
+                    data: { uid: getCookie('Uid01') },
+                    dataType: "json",
+                    success: showdata_check_uid,
+                    error: function () {
+                        alert("error-api/check_uid_api.php");
+                    }
+                });
+            }
+            else {
+                alert("請先登入會員!");
+                location.href = "0913-SPA.html";
+            }
+        });
+
+        function showdata_table(data) {
+            console.log(data);
+            if (data.state) {
+                $("#mem_table").empty();
+                data.data.forEach(function (item) {
+                    console.log(item);
+                    if (item.UserState == 'true') {
+                        var switch01 = '<div class="mb-3 form-check form-switch"><input type="checkbox" class="form-check-input" role="switch" checked id="switch01" data-id="' + item.ID + '"><label for="" class="form-check-label">啟用</label></div>';
+                    } else {
+                        var switch01 = '<div class="mb-3 form-check form-switch"><input type="checkbox" class="form-check-input" data-id="' + item.ID + '" role="switch" id="switch01"><label for="" class="form-check-label">停權</label></div>';
+                    }
+                    var strHTML = '<tr class="table-primary"><td data-th="ID"><span class="table-col">' + item.ID + '</span></td ><td data-th="ID"><span class="table-col">' + switch01 + '</span></td ><td data-th="帳號"><span class="table-col">' + item.Username + '</span></td><td data-th="Email"><span class="table-col">' + item.Email + '</span></td><td data-th="Nickname"><span class="table-col">' + item.Nickname + '</span></td><td data-th="Created_at"><span class="table-col">' + item.Created_at + '</span></td><td><a href="#" class="btn btn-warning me-3" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' + item.ID + '" data-username="' + item.Username + '" data-nickname="' + item.Nickname + '" data-email="' + item.Email + '" id="update_btn">更新</a><a href="#" class="btn btn-danger" data-id="' + item.ID + '" data-username="' + item.Username + '" id="delete_btn">刪除</a></td></tr>';
+                    $("#mem_table").append(strHTML);
+                });
+            }
+            else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_update(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "0913-bak.html";
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_delete(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "0810-1.html";
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_check_uid(data) {
+            console.log(data);
+            if (data.state) {
+                //uid驗證成功
+
+                $.ajax({
+                    type: "GET",
+                    url: "api/control_panel_r_mem_api.php",
+                    dataType: "json",
+                    async: false,
+                    success: showdata_table,
+                    error: function () {
+                        alert("error-api/control_panel_r_mem_api.php");
+                    }
+                });
+
+                //update_btn按鈕監聽
+                $("#mem_table #update_btn").click(function () {
+                    console.log($(this).data("id"));
+                    console.log($(this).data("username"));
+                    console.log($(this).data("nickname"));
+                    console.log($(this).data("email"));
+
+                    $("#username").val($(this).data("username"));
+                    $("#nickname").val($(this).data("nickname"));
+                    $("#email").val($(this).data("email"));
+                    u_id = $(this).data("id");
+                });
+
+                //delete_btn按鈕監聽
+                $("#mem_table #delete_btn").click(function () {
+                    console.log($(this).data("id"));
+                    console.log($(this).data("username"));
+                    if (confirm("確認刪除: " + $(this).data("username") + "?")) {
+                        //傳遞後端control_panel_d_mem_api.php執行刪除
+                        $.ajax({
+                            type: "POST",
+                            url: "api/control_panel_d_mem_api.php",
+                            data: { id: $(this).data("id") },
+                            dataType: "json",
+                            success: showdata_delete,
+                            error: function () {
+                                alert("error-api/control_panel_d_mem_api.php");
+                            }
+                        });
+                    }
+                });
+
+                //modal_update_btn按鈕監聽
+                $("#modal_update_btn").click(function () {
+                    console.log($("#nickname").val());
+                    console.log($("#email").val());
+                    console.log(u_id);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "api/control_panel_u_mem_api.php",
+                        data: { id: u_id, nickname: $("#nickname").val(), email: $("#email").val() },
+                        dataType: "json",
+                        success: showdata_update,
+                        error: function () {
+                            alert("error-api/control_panel_u_mem_api.php");
+                        }
+                    });
+                });
+
+                $("#s20_logout_btn").click(function () {
+                    logout();
+                });
+
+                //監聽switch
+                $("#mem_table #switch01").change(function () {
+                    var userstate, state_id;
+                    if ($(this).is(':checked')) {
+                        userstate >= 0;
+                        console.log(userstate + $(this).data('id'));
+                        $(this).next().text('啟用');
+                        state_id = $(this).data('id');
+                    } else {
+                        userstate = 0;
+                        console.log(userstate + $(this).data('id'));
+                        $(this).next().text('停權');
+                        state_id = $(this).data('id');
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: "api/control_panel_u_mem_userstate_api.php",
+                        data: { id: state_id, userstate: userstate },
+                        dataType: "json",
+                        success: showdata_u_mem_userstate,
+                        error: function () {
+                            alert("error-api/control_panel_u_mem_userstate_api.php");
+                        }
+                    });
+                });
+
+            } else {
+                //uid驗證失敗
+                alert("請先登入會員!");
+                location.href = "0720-hw.html";
+            }
+        }
+
+        function showdata_u_mem_userstate(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+            }
+            else {
+                alert(data.message);
+            }
+        }
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function logout() {
+            setCookie('uid01', '', 1);
+            location.href = "0913-SPA.html";
+        }
+
+    </script>
+</body>
+
+</html>

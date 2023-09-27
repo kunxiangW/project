@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/my.css">
+    <title>table 渲染</title>
+    <style>
+        .table-rwd {
+            margin-top: 15px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .table-rwd thead {
+                display: none;
+            }
+
+            .table-rwd tbody tr {
+                display: block;
+                border: 2px solid var(--mycolor02);
+                margin-top: 10px;
+            }
+
+            .table-rwd tbody tr td {
+                display: block;
+                overflow: hidden;
+            }
+
+            .table-rwd tbody tr td:before {
+                content: attr(data-th)" : ";
+                font-weight: 700;
+                color: var(--mycolor13);
+                display: block;
+                float: left;
+                width: 6em;
+                text-align: right;
+                padding-right: 1em;
+            }
+
+            .table-rwd tbody tr td span.table-col {
+                display: block;
+                float: left;
+                width: calc(100% - 6em);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section id="s20" class="bg-dark">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <i class="fa-solid fa-cannabis text-success fa-2x"></i>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="0913-SPA.html">首頁</a>
+                            </li>
+                        </ul>
+                        <form class="d-flex ms-auto" role="search">
+                            <a href="#" class="btn btn-secondary me-3" data-bs-toggle="modal" data-bs-target="#addModal"
+                                id="addmerch">新增商品</a>
+                            <a href="#" class="btn btn-success me-0" id="s20_logout_btn">登出</a>
+                            <span>
+                                <h2 class="text-light d-none" id="login_message">歡迎回來</h2>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </section>
+    <div class="container">
+
+        <div class="row">
+            <table class="table table-rwd table-bordered">
+                <thead class="text-bg-dark">
+                    <tr>
+                        <th width="10%">ID</th>
+                        <th width="20%">商品名稱</th>
+                        <th width="20%">商品價格</th>
+                        <th width="25%">Created_at</th>
+                        <th width="25%">#</th>
+                    </tr>
+                </thead>
+                <tbody id="bak_merch_table">
+                    <tr class="table-primary">
+                        <td data-th="ID"><span class="table-col">ID</span></td>
+                        <td data-th="帳號"><span class="table-col">商品名稱</span></td>
+                        <td data-th="price"><span class="table-col">商品價格</span></td>
+                        <td data-th="Created_at"><span class="table-col">Created_at</span></td>
+                        <td><a href="#" class="btn btn-warning">更新</a>
+                            <a href="#" class="btn btn-danger me-2">刪除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- updateModal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-bg-warning">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">商品更新</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="merchname" class="form-label">商品名稱</label>
+                        <input type="text" class="form-control" id="merchname" name="merchname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">商品價格</label>
+                        <input type="text" class="form-control" id="price" name="price">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button id="modal_update_btn" class="btn btn-primary">確認更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- addmerchModal -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-bg-warning">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">商品新增</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="add_merchname" class="form-label">商品名稱</label>
+                        <input type="text" class="form-control" id="add_merchname" name="add_merchname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="add_price" class="form-label">商品價格</label>
+                        <input type="text" class="form-control" id="add_price" name="add_price">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button id="modal_add_btn" class="btn btn-primary">確認新增</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <tr class="table-primary">藏值
+        <td data-th="ID"><span class="table-col">' + item.ID + '</span></td >
+        <td data-th="ID"><span class="table-col">' + switch01 + '</span></td >
+        <td data-th="帳號"><span class="table-col">' + item.merchname + '</span></td>
+        <td data-th="Email"><span class="table-col">' + item.Email + '</span></td>
+        <td data-th="price"><span class="table-col">' + item.price + '</span></td>
+        <td data-th="Created_at"><span class="table-col">' + item.Created_at + '</span></td>
+        <td><a href="#" class="btn btn-warning me-3" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' + item.ID + '" data-merchname="' + item.merchname + '" data-price="' + item.price + '" data-email="' + item.Email +'" id="update_btn">更新</a>
+        <a href="#" class="btn btn-danger" data-id="' + item.ID + '" data-merchname="' + item.merchname + '" id="delete_btn">刪除</a></td>
+    </tr> -->
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        var u_id;
+        $(function () {
+            if (getCookie('Uid01') != "") {
+                //是否有登入
+                $.ajax({
+                    type: "POST",
+                    url: "api/check_uid_api.php",
+                    data: { uid: getCookie('Uid01') },
+                    dataType: "json",
+                    success: showdata_check_uid,
+                    error: function () {
+                        alert("error-api/check_uid_api.php");
+                    }
+                });
+            }
+            else {
+                alert("請先登入會員!");
+                location.href = "0913-SPA.html";
+            }
+        });
+
+        function showdata_table(data) {
+            console.log(data);
+            if (data.state) {
+                $("#bak_merch_table").empty();
+                data.data.forEach(function (item) {
+                    console.log(item);
+                    var strHTML = '<tr class="table-primary"><td data-th="id"><span class="table-col">' + item.Merch_ID + '</span></td><td data-merchname="' + item.Merch_Name + '"><span class="table-col">' + item.Merch_Name + '</span></td><td data-th="price"><span class="table-col">' + item.Merch_Price + '</span></td><td data-th="Created_at"><span class="table-col">' + item.Created_at + '</span></td><td><a href="#" class="btn btn-warning me-3" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' + item.Merch_ID + '" data-merchname="' + item.Merch_Name + '" data-price="' + item.Merch_Price + '" id="update_btn">更新</a><a href="#" class="btn btn-danger" data-id="' + item.Merch_ID + '" data-merchname="' + item.Merch_Name + '" id="delete_btn">刪除</a></td></tr>';
+                    $("#bak_merch_table").append(strHTML);
+                });
+            }
+            else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_update(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "bak-merch.html";
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_delete(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "bak-merch.html";
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_add(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "bak-merch.html";
+            } else {
+                alert(data.message);
+            }
+        }
+        
+        function showdata_check_uid(data) {
+            console.log(data);
+            console.log(data.data[0].ID);
+            u_id=data.data[0].ID;
+            if (data.state) {
+                //uid驗證成功
+                $.ajax({
+                    type: "POST",
+                    url: "api/bak_r_merch_api.php",
+                    dataType: "json",
+                    async: false,
+                    data: { id: u_id },
+                    success: showdata_table,
+                    error: function () {
+                        alert("error-api/bak_r_merch_api.php");
+                    }
+                });
+
+                //update_btn按鈕監聽
+                $("#bak_merch_table #update_btn").click(function () {
+                    console.log($(this).data("id"));
+                    console.log($(this).data("merchname"));
+                    console.log($(this).data("price"));
+
+                    $("#merchname").val($(this).data("merchname"));
+                    $("#price").val($(this).data("price"));
+                    u_id = $(this).data("id");
+                });
+
+                //delete_btn按鈕監聽
+                $("#bak_merch_table #delete_btn").click(function () {
+                    console.log($(this).data("id"));
+                    console.log($(this).data("merchname"));
+                    if (confirm("確認刪除: " + $(this).data("merchname") + "?")) {
+                        //傳遞後端control_panel_d_mem_api.php執行刪除
+                        $.ajax({
+                            type: "POST",
+                            url: "api/control_panel_d_mem_api.php",
+                            data: { id: $(this).data("id") },
+                            dataType: "json",
+                            success: showdata_delete,
+                            error: function () {
+                                alert("error-api/control_panel_d_mem_api.php");
+                            }
+                        });
+                    }
+                });
+
+                //modal_update_btn按鈕監聽
+                $("#modal_update_btn").click(function () {
+                    console.log($("#price").val());
+                    console.log(u_id);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "api/bak_u_merch_api.php",
+                        data: { id: u_id, price: $("#price").val(), merchname: $("#merchname").val() },
+                        dataType: "json",
+                        success: showdata_update,
+                        error: function () {
+                            alert("error-api/control_panel_u_mem_api.php");
+                        }
+                    });
+                });
+
+                //modal_add_btn按鈕監聽
+                $("#modal_add_btn").click(function () {
+                    console.log($("#add_merchname").val());
+                    console.log($("#add_price").val());
+                    console.log(u_id);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "api/bak_c_merch_api.php",
+                        data: { id: u_id, merchname: $("#add_merchname").val(), price: $("#add_price").val() },
+                        dataType: "json",
+                        success: showdata_add,
+                        error: function () {
+                            alert("error-api/bak_c_merch_api.php");
+                        }
+                    });
+                });
+
+                $("#s20_logout_btn").click(function () {
+                    logout();
+                });
+
+            } else {
+                //uid驗證失敗
+                alert("請先登入會員!");
+                location.href = "0720-hw.html";
+            }
+        }
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function logout() {
+            setCookie('uid01', '', 1);
+            location.href = "0913-SPA.html";
+        }
+
+    </script>
+</body>
+
+</html>

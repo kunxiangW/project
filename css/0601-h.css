@@ -1,0 +1,155 @@
+:root {
+    --mycolor01: #CCD3D9;
+    --mycolor02: #FED5D9;
+    --mycolor03: #7E212C;
+    --mycolor04: #321E17;
+    --mycolor05: #D9CFE7;
+    --mycolor06: #A8BCBA;
+    --mycolor07: #ACC66D;
+    --mycolor08: #50697D;
+    --mycolor09: #D2E0E9;
+}
+
+body {
+    background-color: var(--mycolor09);
+    padding-top: 15px;
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 1024px;
+}
+
+.wrapper img {
+    width: 100%;
+}
+
+.banner {
+    background-color: var(--mycolor03);
+    color: var(--mycolor02);
+    list-style-type: none;
+}
+
+.wrapper .logo .home{
+    width: 100%;
+    height: 200px;
+    background-color: aqua;
+    background-image: url(../immg/fuji3.jpg);
+    background-position: center center;
+    background-size: cover;
+}
+.wrapper .logo .p1{
+    width: 100%;
+    height: 200px;
+    background-color: aqua;
+    background-image: url(../immg/p1-Salar-de-Uyuni.jpg);
+    background-position: center bottom;
+    background-size: cover;
+}
+.wrapper .logo .p2{
+    width: 100%;
+    height: 200px;
+    background-color: aqua;
+    background-image: url(../immg/p2-Niagara-Falls.jpg);
+    background-position: center center;
+    background-size: cover;
+}
+.wrapper .logo .p3{
+    width: 100%;
+    height: 200px;
+    background-color: aqua;
+    background-image: url(../immg/p3.jpg);
+    background-position: center center;
+    background-size: cover;
+}
+.wrapper .logo .p4{
+    width: 100%;
+    height: 200px;
+    background-color: aqua;
+    background-image: url(../immg/p4-louise-lake.jpg);
+    background-position: center center;
+    background-size: cover;
+}
+
+nav {
+    background-color: var(--mycolor03);
+    text-align: center;
+}
+
+nav ul {
+    display: inline-block;
+}
+
+nav ul li {
+    float: left;
+    list-style-type: none;
+}
+
+nav ul li a {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: var(--mycolor04);
+    margin-right: 5px;
+    /* 按鈕間隔*/
+    color: var(--mycolor05);
+    /* 按鈕字顏色*/
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+nav ul li a:hover {
+    background-color: var(--mycolor08);
+    color: var(--mycolor01);
+}
+
+body {
+    background-color: var(--mycolor09);
+    padding-top: 15px;
+}
+
+.currentLink a {
+    background-color: var(--mycolor01);
+    color: var(--mycolor04);
+    text-decoration: none;
+}
+.content_in {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    text-align: center;
+    background-color: var(--mycolor05);
+}
+
+.content_in h1 {
+    color: var(--mycolor04);
+    margin-bottom: 30px;
+}
+
+.content_in p {
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.footer {
+    background-color: var(--mycolor03);
+    text-align: center;
+    color: var(--mycolor01);
+}
+
+.footer p {
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 0px;
+    /* 因為<p>自動段落會有間隔，將間隔調整成0 */
+}
+
+@media screen and (max-width: 1024px) {
+    .wrapper {
+        width: 95%;
+    }
+}
